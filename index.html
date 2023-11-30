@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grocery App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f4f4f4;
+        }
+
+        #app {
+            width: 400px;
+            margin-top: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #item-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .grocery-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .grocery-item button {
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .add-item-form {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .add-item-form input {
+            flex-grow: 1;
+            padding: 8px;
+            margin-right: 10px;
+        }
+
+        .add-item-form button {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1>Grocery List</h1>
+        <ul id="item-list"></ul>
+        <div class="add-item-form">
+            <input type="text" id="item" placeholder="Enter item">
+            <button onclick="addItem()">Add Item</button>
+        </div>
+    </div>
+
+    <script>
+        function addItem() {
+            const itemInput = document.getElementById('item');
+            const itemName = itemInput.value.trim();
+
+            if (itemName !== '') {
+                const itemList = document.getElementById('item-list');
+
+                const listItem = document.createElement('li');
+                listItem.className = 'grocery-item';
+                listItem.innerHTML = `
+                    <span>${itemName}</span>
+                    <button onclick="editItem(this)">Edit</button>
+                    <button onclick="deleteItem(this)">Delete</button>
+                `;
+
+                itemList.appendChild(listItem);
+                itemInput.value = '';
+            }
+        }
+
+        function editItem(button) {
+            const newItem = prompt('Enter the new item name:');
+            if (newItem !== null) {
+                button.parentNode.querySelector('span').innerText = newItem;
+            }
+        }
+
+        function deleteItem(button) {
+            const confirmDelete = confirm('Are you sure you want to delete this item?');
+            if (confirmDelete) {
+                const listItem = button.parentNode;
+                listItem.parentNode.removeChild(listItem);
+            }
+        }
+    </script>
+</body>
+</html>
